@@ -50,4 +50,6 @@ Failure (custom exception handler response with sample json):
 
 ### Reference Documentation
 
-- [Spring Reactive Web](https://docs.spring.io/spring-boot/docs/2.7.4/reference/htmlsingle/#web.reactive.webflux)
+- [Spring Reactive Web](https://docs.spring.io/spring-boot/docs/2.7.4/reference/htmlsingle/#web.reactive)
+- [Spring WebFlux reference](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html#webflux-reactive-api)
+- [Coinbase API: Price Data(free w/Rate limiting)](https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/price-data)
