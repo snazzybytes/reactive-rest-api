@@ -1,0 +1,54 @@
+# defaults for all envs (unless overriden below)
+spring:
+  profiles:
+    active: dev
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "health"
+          - "info"
+          - "metrics"
+          - "prometheus"
+
+#management.endpoints.web.exposure.include=*
+---
+# test config (enables spring debug - to see WebClient logging)
+spring:
+  config:
+    activate:
+      on-profile: test
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+coinbaseapi:
+  baseurl: "https://api.coinbase.com/v2/prices/spot"
+---
+# dev/local config
+spring:
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    web: DEBUG
+coinbaseapi:
+  baseurl: "https://api.coinbase.com/v2/prices/spot"
+
+---
+# prod config
+spring:
+  config:
+    activate:
+      on-profile: prod
+coinbaseapi:
+  baseurl: "https://api.coinbase.com/v2/prices/spot"
