@@ -1,5 +1,7 @@
 # Reactive Rest API with Spring Boot + WebFlux
 
+[![Java CI with Maven](https://github.com/snazzybytes/reactive-rest-api/actions/workflows/maven.yml/badge.svg)](https://github.com/snazzybytes/reactive-rest-api/actions/workflows/maven.yml)
+
 This is an boilerplate example of **Reactive Rest API with Spring Boot + WebFlux** for modern non-blocking rest api development.
 
 It diplays the basic usage of reactive web components via 2 different approaches (both behave exactly same to showcase each):
