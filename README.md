@@ -6,18 +6,15 @@
 
 This is an boilerplate example of **Reactive Rest API with Spring Boot + WebFlux** for modern non-blocking rest api development.
 
-It diplays the basic usage of reactive web components via 2 different approaches (both behave exactly same to showcase each):
+It diplays the basic usage of reactive web components via 2 different approaches (both endpoints behave exactly same but are wired up differently).
 
-> 1st endpoint: /prices/btc/{currency}:
->
-> - annotation-based reactive components: RestController/RequestMapping/GetMapping and WebClient (the good ole way)
->
-> 2nd endpoint: /prices2/btc/{currency}
->
-> - functional routing and handling (Router returns ServerResponse, Handler processes ServerRequest)
+1st endpoint "/prices/btc/{currency}":
 
-- 2nd endpoint: /prices2/btc/{currency}
-  - functional routing and handling (Router returns ServerResponse, Handler processes ServerRequest)
+- annotation-based reactive components: RestController/RequestMapping/GetMapping and WebClient (the good ole way)
+
+2nd endpoint "/prices2/btc/{currency}":
+
+- functional routing and handling: Router returns ServerResponse, Handler processes ServerRequest
 
 The sample service calls out to Coinbase-API to get PriceData, and returns PriceInfo model containing "price", "currency", and "satsPerFiat":
 
@@ -34,8 +31,8 @@ The sample service calls out to Coinbase-API to get PriceData, and returns Price
   - application.yaml defines multi-environment properties in single file (can be split up into application-test.yml, application-dev.yml, etc)
   - simple StopWatch to measure time between when Mono is subscribed to, and when Mono completes
 - JUnit5 enabled (see pom.xml's "org.junit.jupiter" dependencies)
-  - parameterized tests via @ParameterizedTest and @ValueSource
-  - testing WebClient using MockWebServer
+  - parameterized unit tests via @ParameterizedTest and @ValueSource
+  - testing WebClient with MockWebServer
 - integration tests:
   - uses WebTestClient over http connection to test server for success/failure (can be used with mock req/resp but NO mocks are used in this case)
   - WebTestClient's benefit is the fluent API for verifying responses (expectBody() etc.. see tests)
@@ -48,6 +45,7 @@ The sample service calls out to Coinbase-API to get PriceData, and returns Price
   - Spring's Actuator w/Micrometer metrics including Prometheus
   - spring actuator endpoints are enabled via application.yaml, and maven dependency (see pom.xml) to enable prometheus
 - spring-boot-devtools (aids local development)
+- Docker: sample Dockerfile and docker-compose included
 
 Custom Log4j2 logging:
 ![Custom Logging](/assets/custom-logging.png)
@@ -56,15 +54,15 @@ Custom Log4j2 logging:
 
 ## Usage
 
-Running Application:
+Running Application
 
-Dockerfile and docker-compose included for convenience.
+- You can run spring-boot ReactiveRestApiApplication in your favorite IDE like VSCode.
 
-```
-$ docker-compose up
-```
+- Dockerfile and docker-compose included for convenience
 
-Or just run ReactiveRestApiApplication.java in your favorite IDE like VSCode
+  ```
+  $ docker-compose up
+  ```
 
 Request:
 
