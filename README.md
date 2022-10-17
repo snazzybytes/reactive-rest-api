@@ -2,16 +2,30 @@
 
 [![Java CI with Maven](https://github.com/snazzybytes/reactive-rest-api/actions/workflows/maven.yml/badge.svg)](https://github.com/snazzybytes/reactive-rest-api/actions/workflows/maven.yml)
 
+---
+
 This is an boilerplate example of **Reactive Rest API with Spring Boot + WebFlux** for modern non-blocking rest api development.
 
 It diplays the basic usage of reactive web components via 2 different approaches (both behave exactly same to showcase each):
 
-- 1st endpoint: /prices/btc/{currency}
-
-  - annotation-based reactive components: RestController/RequestMapping/GetMapping and WebClient (the good ole way)
+> 1st endpoint: /prices/btc/{currency}:
+>
+> - annotation-based reactive components: RestController/RequestMapping/GetMapping and WebClient (the good ole way)
+>
+> 2nd endpoint: /prices2/btc/{currency}
+>
+> - functional routing and handling (Router returns ServerResponse, Handler processes ServerRequest)
 
 - 2nd endpoint: /prices2/btc/{currency}
   - functional routing and handling (Router returns ServerResponse, Handler processes ServerRequest)
+
+The sample service calls out to Coinbase-API to get PriceData, and returns PriceInfo model containing "price", "currency", and "satsPerFiat":
+
+- price: decimal amount with 2-decimal points in requested currency
+- currency: requested currency code
+- satsPerFiat: number of satoshis (unit of bitcoin) per requested fiat currency unit
+
+---
 
 #### Highlights
 
@@ -38,19 +52,55 @@ It diplays the basic usage of reactive web components via 2 different approaches
 Custom Log4j2 logging:
 ![Custom Logging](/assets/custom-logging.png)
 
-Success (PriceInfo response):
+---
 
-- GET http://localhost:8080/prices2/btc/USD
+## Usage
 
-![Success Response](/assets/success.png)
+Running Application:
 
-Failure (custom exception handler response with sample json):
+Dockerfile and docker-compose included for convenience.
 
-- GET http://localhost:8080/prices2/btc/DummyBadCode
+```
+$ docker-compose up
+```
 
-![Failure Response](/assets/failure.png)
+Or just run ReactiveRestApiApplication.java in your favorite IDE like VSCode
 
-### Reference Documentation
+Request:
+
+```bash
+# 2 reactive endpoints w/ same response
+GET http://localhost:8080/prices/btc/USD
+
+GET http://localhost:8080/prices2/btc/EUR
+```
+
+Response:
+
+```json
+// success - PriceInfo response
+{
+  "price": "19764.81",
+  "currency": "EUR",
+  "satsPerFiat": "5059"
+}
+```
+
+```json
+// error - bad request  (custom exception handler response with sample json)
+{
+  "errors": [
+    {
+      "id": "invalid_request",
+      "message": "Currency is invalid"
+    }
+  ]
+}
+```
+
+---
+
+## Reference Documentation
 
 - [Spring Reactive Web](https://docs.spring.io/spring-boot/docs/2.7.4/reference/htmlsingle/#web.reactive)
 - [Spring WebFlux reference](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html#webflux-reactive-api)
