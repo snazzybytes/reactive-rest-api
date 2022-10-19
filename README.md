@@ -58,7 +58,7 @@ Custom Log4j2 logging:
 
 You can run spring-boot ReactiveRestApiApplication in your favorite IDE like VSCode. Dockerfile and docker-compose included for convenience (defaults from .env file will be used if not passed).
 
-- Run with docker-compse:
+- Run with docker-compose:
 
   ```
   $ docker-compose up
@@ -72,6 +72,8 @@ You can run spring-boot ReactiveRestApiApplication in your favorite IDE like VSC
   ```
   docker run -e JAVA_OPTS="-Xmx512m" -p8080:8080 snazzybytes/reactive-rest-api
   ```
+- "Dockerfile" is the optimized multi-stage build
+- "Dockerfile-simple" is basic non-optimized build (you can ignore this one, only for illustration purposes)
 
 Request:
 
