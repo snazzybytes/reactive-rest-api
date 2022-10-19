@@ -1,0 +1,48 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Maven/Docker Release workflow
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+
+    environment: reactive-rest-api
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: master
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Configure git
+      run: |
+        git config --global committer.email "noreply@github.com"
+        git config --global committer.name "GitHub"
+        git config --global author.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git config --global author.name "${GITHUB_ACTOR}"
+    - name: Checkout master branch
+      run: git checkout master
+    - name: Prepare release
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+        mvn --batch-mode release:prepare -Dusername=$GITHUB_ACTOR -Dpassword=$GITHUB_TOKEN
+    - name: Perform release
+      env:
+        docker.username: $GITHUB_ACTOR
+        docker.password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+        mvn --batch-mode release:perform
