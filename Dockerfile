@@ -7,8 +7,9 @@ FROM eclipse-temurin:17-jre as builder
 WORKDIR /app
 
 # copy the "fat jar" to current "/app" directory
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# fabri8 docker-maven-plugin requires "maven/" instead of "/target" here
+ARG JAR_FILE=maven/*.jar
+COPY ${JAR_FILE} ./app.jar
 
 # 1st stage: extract fat jar into layers
 RUN java -Djarmode=layertools -jar app.jar extract

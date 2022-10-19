@@ -129,36 +129,30 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>${spotify.dockerfile.maven.version}</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>tag-latest</id>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
-						</goals>
-						<configuration>
-							<tag>latest</tag>
-						</configuration>
-					</execution>
-				</executions>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.40.2</version>
 				<configuration>
-					<username>${project.groupId}</username>
-					<password>${env.DOCKER_HUB_TOKEN}</password>
-					<repository>registry.hub.docker.com/${dockerhub.username}/${project.artifactId}</repository>
-					<tag>${project.version}</tag>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<!-- should yield "snazzybytes/reactive-rest-api"-->
+							<name>snazzybytes/${project.artifactId}</name>
+							<build>
+								<assembly>
+									<descriptorRef>artifact</descriptorRef>
+								</assembly>
+								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
+								<tags>
+									<tag>latest</tag>
+									<tag>${project.version}</tag>
+								</tags>
+							</build>
+						</image>
+					</images>
 				</configuration>
 			</plugin>
-			<!-- Skip maven-deploy-plugin (using Spotify instead) -->
+			<!-- Skip maven-deploy-plugin (using Fabric8/Spotify/Other? instead) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>

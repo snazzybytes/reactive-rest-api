@@ -39,5 +39,6 @@ jobs:
       run: mvn --batch-mode release:prepare -Dusername=$GITHUB_ACTOR -Dpassword=$GITHUB_TOKEN
     - name: Perform release
       env:
-        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker.username: $GITHUB_ACTOR
+        docker.password: ${{ secrets.DOCKER_HUB_TOKEN }}
       run: mvn --batch-mode release:perform
