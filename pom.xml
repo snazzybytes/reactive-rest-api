@@ -27,7 +27,7 @@
 		<checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
 		<mockwebserver.version>4.10.0</mockwebserver.version>
 		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
-		<spotify.docker.maven.version>1.4.13</spotify.docker.maven.version>
+		<spotify.dockerfile.maven.version>1.4.13</spotify.dockerfile.maven.version>
 		<dockerhub.username>snazzybytes</dockerhub.username>
 	</properties>
 	<dependencies>
