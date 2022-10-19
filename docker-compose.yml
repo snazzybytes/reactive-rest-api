@@ -1,10 +1,12 @@
-version: '3.4'
+version: "3.4"
 
 services:
   reactiverestapi:
-    image: reactiverestapi
+    image: snazzybytes/reactive-rest-api
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      - "JAVA_OPTS=${JAVA_OPTS}"
     ports:
       - 8080:8080
