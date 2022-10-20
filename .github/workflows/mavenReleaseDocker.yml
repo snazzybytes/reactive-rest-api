@@ -1,14 +1,14 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Maven/Docker Release workflow
+name: Maven/Docker Release
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  build:
+  release:
 
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -36,8 +36,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       run: |
         echo '${{ toJSON(github) }}'
-        echo "$MAVEN_OPTS"
-        echo "$GITHUB_ACTOR"
         mvn --batch-mode release:prepare -Dusername=$GITHUB_ACTOR -Dpassword=$GITHUB_TOKEN
     - name: Perform release
       env:
