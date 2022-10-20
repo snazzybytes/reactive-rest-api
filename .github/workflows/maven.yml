@@ -6,6 +6,12 @@ name: Java CI with Maven
 on:
   pull_request:
     branches: [ "master" ]
+    paths:
+      - '**'
+    paths-ignore:
+      - '**pom.xml'
+# TODO - remove/keep 'paths' once verified
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#patterns-to-match-file-paths
 
 jobs:
   build:
