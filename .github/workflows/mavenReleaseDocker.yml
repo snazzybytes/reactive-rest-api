@@ -31,18 +31,20 @@ jobs:
         git config --global committer.name "GitHub"
         git config --global author.email "${GITHUB_ACTOR}@users.noreply.github.com"
         git config --global author.name "${GITHUB_ACTOR}"
-    - name: Checkout master branch
-      run: git checkout master
     - name: Prepare release
       env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
       run: |
-        echo "$GITHUB_CONTEXT"
+        echo '${{ toJSON(github) }}'
+        echo "$MAVEN_OPTS"
+        echo "$GITHUB_ACTOR"
         mvn --batch-mode release:prepare -Dusername=$GITHUB_ACTOR -Dpassword=$GITHUB_TOKEN
     - name: Perform release
       env:
-        docker.username: $GITHUB_ACTOR
-        docker.password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        DOCKER_USER: snazzybytes
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
       run: |
-        echo "$GITHUB_CONTEXT"
-        mvn --batch-mode release:perform
+        echo '${{ toJSON(github) }}'
+        echo "$MAVEN_OPTS"
+        echo "$DOCKER_USER"
+        mvn --batch-mode release:perform -Ddocker.username=$DOCKER_USER -Ddocker.password=$DOCKER_HUB_TOKEN
