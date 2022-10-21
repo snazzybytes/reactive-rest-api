@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    # "if" will be needed later for mvn release workflow
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
     - uses: actions/checkout@v3
