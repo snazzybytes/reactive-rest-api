@@ -4,15 +4,17 @@
 
 ---
 
+## Overview
+
 This is an boilerplate example of **Reactive Rest API with Spring Boot + WebFlux** for modern non-blocking rest api development.
 
 It diplays the basic usage of reactive web components via 2 different approaches (both endpoints behave exactly same but are wired up differently).
 
-1st endpoint "/prices/btc/{currency}":
+### 1st API endpoint => "/prices/btc/{currency}"
 
 - annotation-based reactive components: RestController/RequestMapping/GetMapping and WebClient (the good ole way)
 
-2nd endpoint "/prices2/btc/{currency}":
+### 2nd API endpoint => "/prices2/btc/{currency}"
 
 - functional routing and handling: Router returns ServerResponse, Handler processes ServerRequest
 
@@ -24,7 +26,7 @@ The sample service calls out to Coinbase-API to get PriceData, and returns Price
 
 ---
 
-#### Highlights
+## Highlights
 
 - Spring Boot/WebFlux:
   - uses @Value for constructor injection of config properties from application.yaml
@@ -40,7 +42,7 @@ The sample service calls out to Coinbase-API to get PriceData, and returns Price
   - log4j2 enabled via "spring-boot-starter-log4j2" (instead of logback spring default)
   - log4j2-spring.xml defines log patterns (xml could be replaced with YAML/JSON if needed)
 - maven :
-  - some example plugins configured - maven-dependency-plugin/maven-enforcer-plugin/maven-checkstyle-plugin
+  - common plugins configured: maven-dependency-plugin/maven-enforcer-plugin/maven-checkstyle-plugin
 - metrics :
   - Spring's Actuator w/Micrometer metrics including Prometheus
   - spring actuator endpoints are enabled via application.yaml, and maven dependency (see pom.xml) to enable prometheus
@@ -52,30 +54,33 @@ Custom Log4j2 logging:
 
 ---
 
-## Usage
+# Usage
 
-### Running Application
+## Run the app
 
 You can run spring-boot ReactiveRestApiApplication in your favorite IDE like VSCode. Dockerfile and docker-compose included for convenience (defaults from .env file will be used if not passed).
 
-- Run with docker-compose:
+### Run with docker-compse:
 
-  ```
-  $ docker-compose up
-  ```
+```
+$ docker-compose up
+```
 
-- Alternatively, you can also pass in custom JAVA_OPTS like so:
-  ```
-  $ JAVA_OPTS="-Xmx512m" docker-compose up
-  ```
-- plain "docker" command
-  ```
-  docker run -e JAVA_OPTS="-Xmx512m" -p8080:8080 snazzybytes/reactive-rest-api
-  ```
-- "Dockerfile" is the optimized multi-stage build
-- "Dockerfile-simple" is basic non-optimized build (you can ignore this one, only for illustration purposes)
+Alternatively, you can also pass in custom JAVA_OPTS like so:
 
-Request:
+```
+$ JAVA_OPTS="-Xmx512m" docker-compose up
+```
+
+### Run with plain "docker" command:
+
+```
+docker run -e JAVA_OPTS="-Xmx512m" -p8080:8080 snazzybytes/reactive-rest-api
+```
+
+## Call the API
+
+### Request:
 
 ```bash
 # 2 reactive endpoints w/ same response
@@ -84,7 +89,7 @@ GET http://localhost:8080/prices/btc/USD
 GET http://localhost:8080/prices2/btc/EUR
 ```
 
-Response:
+### Response:
 
 ```json
 // success - PriceInfo response
